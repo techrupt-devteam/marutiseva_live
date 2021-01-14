@@ -256,7 +256,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::get('/edit_permission/{id}',	     'Admin\PermissionController@edit');
 	Route::post('/update_permission/{id}',   'Admin\PermissionController@update');
 	Route::get('/delete_permission/{id}',	 'Admin\PermissionController@delete');
-	Route::get('/getmenu',	 				 'Admin\PermissionController@get_menu');
+	Route::post('/getmenu',	 				 'Admin\PermissionController@get_menu');
 
 	
 });

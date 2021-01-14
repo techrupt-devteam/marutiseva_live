@@ -113,7 +113,7 @@
   $("select.city").change(function() {
       var selectedCity = $(".city option:selected").val();
       $.ajax({
-        type: "get",
+        type: "POST",
         url: "getArea",
         data: {
           city: selectedCity

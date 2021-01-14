@@ -29,20 +29,43 @@
             <!-- /.box-header -->
             <!-- form start --> 
              @include('admin.layout._status_msg')
-              <form action="{{ url('/admin')}}/update_{{$url_slug}}/{{$data['role_id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
+              <form action="{{ url('/admin')}}/update_{{$url_slug}}/{{$data['per_id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
               {!! csrf_field() !!}
               <div class="row">
                 <div class="col-md-12">
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="menu_name">Role Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="role_name" name="role_name" placeholder="Role Name" value="{{$data['role_name']}}" required="true">
+                        <label for="role_name">Select Role<span style="color:red;" >*</span></label>
+                         <select name="role_id" id="role_id" class="form-control" required="true">
+                         <option value="">-Select-</option>  
+                           @foreach($role as $rvalue)
+                             <option value="{{$rvalue->role_id}}">{{$rvalue->role_name}}</option>  
+                           @endforeach
+                         </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="role_name">Select Type<span style="color:red;" >*</span></label>
+                         <select name="type_id" id="type_id" class="form-control type_id" required="true">
+                         <option value="">-Select-</option>  
+                           @foreach($type as $tvalue)
+                             <option value="{{$tvalue->type_id}}">{{$tvalue->type_name}}</option>  
+                           @endforeach
+                         </select>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>  
+                </div> 
+                <div class="row">
+                  <div class="col-md-12" id="menudiv">
+                       
+                  </div>
+                </div>
               <!-- /.box-body -->
               <div class="box-footer">
                 <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>

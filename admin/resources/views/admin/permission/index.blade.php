@@ -32,22 +32,21 @@
                 <thead>
                 <tr>
                   <th>Sr.No.</th>
-                  <th>Name</th>
+                  <th>Role</th>
+                  <th>Type</th>
                   <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                
                   @foreach($data as $key=>$value)
                     <tr>
                       <td>{{$key+1}}</td>
-                      <td></td>
+                      <td>{{$value->role_name}}</td>
+                      <td>{{$value->type_name}}</td>
                       <td>
-                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value['per_id']}}" title="Edit">
+                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value->per_id}}" title="Edit">
                           <i class="fa fa-edit"></i>
-                        </a>
-                       
-                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{$value['per_id']}}" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                        </a><a href="{{url('/admin')}}/delete_{{$url_slug}}/{{$value->per_id}}" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
                           <i class="fa fa-trash"></i>
                         </a>
                       </td>

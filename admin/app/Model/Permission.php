@@ -11,11 +11,15 @@ class Permission extends Model
     protected $fillable = [
 		"role_id",
 		"type_id",
-        "permission"
+        "permission_access"
     ];
 
     public function ModuleType()
     {
         return $this->belongsTo('App\Model\ModuleType','type_id');
     }
+
+
+
+
 }

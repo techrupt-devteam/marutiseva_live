@@ -15,5 +15,10 @@ class ModuleType extends Model
     public function Module()
     {
         return $this->hasMany('App\Model\Module','type_id');
+    } 
+
+    public function Permission()
+    {
+        return $this->hasMany('App\Model\Permission','type_id');
     }
 }

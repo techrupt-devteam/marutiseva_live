@@ -28,12 +28,19 @@ class PermissionController extends Controller
     public function index()
     {
         $arr_data = [];
-        $data     = $this->base_model->get();
-        if(!empty($data))
+        $data     = \DB::table('permission')
+                     ->join('role','permission.role_id','=','role.role_id')
+                     ->join('module_type','permission.type_id','=','module_type.type_id')
+                     ->select('role.role_name','module_type.type_name','permission.*')
+                     ->orderBy('permission.per_id','DESC')
+                     ->get()->toArray();
+        /*if(!empty($data))
         {
             $arr_data = $data->toArray();
-        }
-        $data['data']      = $arr_data;
+        }*/
+        
+        //dd($data[0]->role_name);
+        $data['data']      = $data;
         $data['page_name'] = "Manage";
         $data['url_slug']  = $this->url_slug;
         $data['title']     = $this->title;
@@ -55,8 +62,28 @@ class PermissionController extends Controller
     public function get_menu(Request $request)
     {
        $type_id = $request->type_id;
-       $menu_list = $this->module->where(['type_id'=>$type_id])->get();
-       dd($menu_list);     
+       $model_list = $this->module->where(['type_id'=>$type_id])->get();
+       $html="";
+       $html.='<div class="col-md-6" style="margin-left: 12px;">
+                <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                      <th>Sr.No</th>
+                      <th>Module Name</th>
+                      <th class="text-center">Permission</th>
+                    </tr>
+                </thead><tbody>';
+        $i=1;
+        foreach ($model_list as $value) {
+          $html.='<tr>
+                    <td>'.$i.') </td>
+                    <td>'.$value['module_name'].'</td>
+                    <td class="text-center"> <input type="checkbox" class="form-check-input" name="permission_access[]" id="" value="'.$value['module_id'].'"></td>
+                  </tr>';
+        $i++;
+       }
+       $html.="</tbody></table></div>";
+       return $html;
     }
 
 
@@ -64,32 +91,35 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-                'module_name' => 'required',
-                'type_id'  => 'required'
+                'role_id' => 'required',
+                'type_id'  => 'required',
             ]);
 
         if ($validator->fails()) 
         {
             return $validator->errors()->all();
         }
-      
-        $is_exist = $this->base_model->where(['module_name'=>$request->input('module_name'),'type_id'=>$request->input('type_id')])->count();
+
+        
+        $is_exist = $this->base_model->where(['role_id'=>$request->input('role_id'),'type_id'=>$request->input('type_id')])->count();
 
         if($is_exist)
         {
-            Session::flash('error', "module already exist!");
+            Session::flash('error', "Permission already exist!");
             return \Redirect::back();
         }
-
-        $arr_data                 = [];
-        $arr_data['module_name']   = $request->input('module_name');
-        $arr_data['type_id']    = $request->input('type_id');
-        $user = $this->base_model->create($arr_data);
-      
-        if(!empty($user))
+        
+        $permissions_data = implode(",",$request->input('permission_access'));
+       
+        $arr_data                       = [];
+        $arr_data['role_id']            = $request->input('role_id');
+        $arr_data['type_id']            = $request->input('type_id');
+        $arr_data['permission_access']  = $permissions_data;
+        $permissions = $this->base_model->create($arr_data);
+        if(!empty($permissions))
         {
             Session::flash('success', 'Success! Record added successfully.');
-            return \Redirect::to('admin/manage_module');
+            return \Redirect::to('admin/manage_permission');
         }
         else
         {
@@ -101,14 +131,16 @@ class PermissionController extends Controller
     public function edit($id)
     {
         $arr_data = [];
-        $data     = $this->base_model->where(['module_id'=>$id])->first();
+        $data     = $this->base_model->where(['per_id'=>$id])->first();
         if(!empty($data))
         {
             $arr_data = $data->toArray();
         }
 
-        $type = $this->moduletype->get();        
+        $type = $this->moduletype->get();
+        $role = $this->role->get();        
         $data['type']      = $type;
+        $data['role']      = $role;
         $data['data']      = $arr_data;
         $data['page_name'] = "Edit";
         $data['url_slug']  = $this->url_slug;
@@ -139,7 +171,6 @@ class PermissionController extends Controller
         $module_update = $this->base_model->where(['module_id'=>$id])->update($arr_data);
         Session::flash('success', 'Success! Record update successfully.');
         return \Redirect::to('admin/manage_module');
-        
     }
 
     public function delete($id)

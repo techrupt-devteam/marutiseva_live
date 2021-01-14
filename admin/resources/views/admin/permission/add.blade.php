@@ -33,7 +33,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="role_name">Select Role<span style="color:red;" >*</span></label>
-                         <select name="type_id" id="type_id" class="form-control" required="true">
+                         <select name="role_id" id="role_id" class="form-control" required="true">
                          <option value="">-Select-</option>  
                            @foreach($role as $rvalue)
                              <option value="{{$rvalue->role_id}}">{{$rvalue->role_name}}</option>  
@@ -46,7 +46,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="role_name">Select Type<span style="color:red;" >*</span></label>
-                         <select name="type_id" id="type_id" class="form-control" required="true">
+                         <select name="type_id" id="type_id" class="form-control type_id" required="true">
                          <option value="">-Select-</option>  
                            @foreach($type as $tvalue)
                              <option value="{{$tvalue->type_id}}">{{$tvalue->type_name}}</option>  
@@ -56,16 +56,12 @@
                     </div>
                   </div>
                 </div>
+                </div> 
                 <div class="row">
-                   <div class="col-md-12">
-
-                     <div id="menudiv">
+                  <div class="col-md-12" id="menudiv">
                        
-                     </div>
-                   </div>
+                  </div>
                 </div>
-              </div>  
-             
               <div class="box-footer">
                 <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
                 <button type="submit" class="btn btn-primary pull-right">Submit</button>
@@ -83,10 +79,10 @@
   <!-- /.content-wrapper -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script type="text/javascript">
-  $("select#type_id").change(function() {
-      var type_id = $("#type_id option:selected").val();
+  $("select.type_id").change(function() {
+      var type_id = $(".type_id option:selected").val();
       $.ajax({
-        type: "get",
+        type: "post",
         url: "getmenu",
         data: {
           type_id: type_id

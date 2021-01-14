@@ -12,4 +12,11 @@ class Role extends Model
 		"role_name"
 	];
 
+	public function Module()
+    {
+        return $this->hasMany('App\Model\Module','type_id');
+    }
+
+    
+
 }
