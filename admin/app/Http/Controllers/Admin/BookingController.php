@@ -1083,7 +1083,242 @@ public function commercial_feedback()
         //print_r($data);
         die;
     }
+    //seva book your services   
+    public function download_services(Request $request)
+    {
+        $data     = \DB::table('book_your_service')
+                        ->orderBy('id','DESC')
+                        ->get();
 
+        header("Content-type: text/csv");
+        header("Content-Disposition: attachment; filename=Seva-Book-Your-Services".Date('d-m-Y').".csv");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+          
+          echo "Sr. No.";
+          echo ',';
+          echo "Full Name";
+          echo ',';
+          echo "Email";
+          echo ',';
+          echo "Mobile No.";
+          echo ',';
+          echo "Service Date";
+          echo ',';
+          echo "Service Type";
+          echo ',';
+          echo "City";
+          echo ',';
+          echo "Area";
+          echo ',';
+          echo "Time";
+          echo ',';
+          echo "Car No";
+          echo ',';
+          echo "Pickyup";
+          echo ',';
+          echo "Pincode";
+          echo ',';
+          echo "Message";
+          echo ',';
+          echo "Create Date";
+          echo ',';
+          echo "\n";
+          foreach ($data as $key => $value) 
+          {
+            
+              echo $key+1;
+              echo ',';
+              echo $value->name;
+              echo ',';
+              echo $value->email;
+              echo ',';
+              echo $value->mobile_no;
+              echo ',';
+              echo $value->service_date;
+              echo ',';
+              echo $value->service;
+              echo ',';
+              echo $value->city;
+              echo ',';     
+              echo $value->area;
+              echo ',';
+              echo $value->time;
+              echo ',';
+              echo $value->car_no;
+              echo ',';
+              echo $value->pickup;
+              echo ',';
+              echo $value->pincode;
+              echo ',';
+              echo $value->message;
+              echo ',';
+              echo $value->created_at;
+              echo ',';
+              echo "\n";
+         }
+        //print_r($data);
+        die;
+    }
+
+    //nexa book your services csv 
+    public function nexa_download_services(Request $request)
+    {
+        $data     = \DB::table('nexa_book_your_service')
+                    ->orderBy('id','DESC')
+                    ->get();
+
+        header("Content-type: text/csv");
+        header("Content-Disposition: attachment; filename=Nexa-Book-Your-Services".Date('d-m-Y').".csv");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+          
+          echo "Sr. No.";
+          echo ',';
+          echo "Full Name";
+          echo ',';
+          echo "Email";
+          echo ',';
+          echo "Mobile No.";
+          echo ',';
+          echo "Service Date";
+          echo ',';
+          echo "Service Type";
+          echo ',';
+          echo "City";
+          echo ',';
+          echo "Area";
+          echo ',';
+          echo "Time";
+          echo ',';
+          echo "Car No";
+          echo ',';
+          echo "Pickyup";
+          echo ',';
+          echo "Pincode";
+          echo ',';
+          echo "Message";
+          echo ',';
+          echo "Create Date";
+          echo ',';
+          echo "\n";
+          foreach ($data as $key => $value) 
+          {
+            
+              echo $key+1;
+              echo ',';
+              echo $value->name;
+              echo ',';
+             echo $value->email;
+              echo ',';
+              echo $value->mobile_no;
+              echo ',';
+              echo $value->service_date;
+              echo ',';
+              echo $value->service;
+              echo ',';
+              echo $value->city;
+              echo ',';     
+              echo $value->area;
+              echo ',';
+              echo $value->time;
+              echo ',';
+              echo $value->car_no;
+              echo ',';
+              echo $value->pickup;
+              echo ',';
+              echo $value->address;
+              echo ',';
+              echo $value->message;
+              echo ',';
+              echo $value->created_at;
+              echo ',';
+              echo "\n";
+         }
+        //print_r($data);
+        die;
+    }
+    
+    //commercial book your services csv 
+        public function commercial_download_services(Request $request)
+        {
+            $data     = \DB::table('commercial_book_your_service')
+                        ->orderBy('id','DESC')
+                        ->get();
+
+            header("Content-type: text/csv");
+            header("Content-Disposition: attachment; filename=commercial-Book-Your-Services".Date('d-m-Y').".csv");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+              
+              echo "Sr. No.";
+              echo ',';
+              echo "Full Name";
+              echo ',';
+              echo "Email";
+              echo ',';
+              echo "Mobile No.";
+              echo ',';
+              echo "Service Date";
+              echo ',';
+              echo "Service Type";
+              echo ',';
+              echo "City";
+              echo ',';
+              echo "Area";
+              echo ',';
+              echo "Time";
+              echo ',';
+              echo "Car No";
+              echo ',';
+            /*  echo "Pickyup";
+              echo ',';*/
+            /*  echo "Pincode";
+              echo ',';*/
+              echo "Message";
+              echo ',';
+              echo "Create Date";
+              echo ',';
+              echo "\n";
+              foreach ($data as $key => $value) 
+              {
+                
+                  echo $key+1;
+                  echo ',';
+                  echo $value->name;
+                  echo ',';
+                  echo $value->email;
+                  echo ',';
+                  echo $value->mobile_no;
+                  echo ',';
+                  echo $value->service_date;
+                  echo ',';
+                 echo $value->service;
+                  echo ',';
+                  echo $value->city;
+                  echo ',';     
+                  echo $value->area;
+                  echo ',';
+                  echo $value->time;
+                  echo ',';
+                  echo $value->car_no;
+                  echo ',';
+                  /*echo $value->pickup;
+                  echo ',';*/
+          
+                  echo $value->message;
+                  echo ',';
+                  echo $value->created_at;
+                  echo ',';
+                  echo "\n";
+             }
+            //print_r($data);
+            die;
+        }
+
+
+
+    // 
     public function nexa_download_bookings(Request $request)
     {
         $data     = \DB::table('nexa_booking')

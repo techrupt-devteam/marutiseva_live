@@ -24,8 +24,8 @@
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
         </li>
-        @if($session_user->role=='admin')
-       <li class="treeview">
+       <!-- @if($session_user->role=='admin')
+        --><li class="treeview">
           <a href="#">
             <i class="fa fa-television"></i> <span>Seva</span>
             <span class="pull-right-container">
@@ -305,9 +305,49 @@
             </span>
           </a>
         </li>
+        
           </ul>
         </li>
+         <li class="treeview  @if(Request::segment(2)=='manage_module' || Request::segment(2)=='add_module' || Request::segment(2)=='edit_module' ||Request::segment(2)=='manage_role' || Request::segment(2)=='add_role' || Request::segment(2)=='edit_role'||Request::segment(2)=='manage_permission' || Request::segment(2)=='add_permission' || Request::segment(2)=='edit_permission') active @endif ">
+            <a href="#">
+              <i class="fa fa-television"></i> <span>Role Setting</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li @if(Request::segment(2)=='manage_module' || Request::segment(2)=='add_module' || Request::segment(2)=='edit_module') class="active" @endif>
+                <a href="{{url('/admin')}}/manage_module">
+                  <i class="fa fa-circle-o"></i> <span>Module Master</span>
+                  <span class="pull-right-container">
+                  </span>
+                </a>
+              </li>
+              <li @if(Request::segment(2)=='manage_role' || Request::segment(2)=='add_role' || Request::segment(2)=='edit_role') class="active" @endif>
+                <a href="{{url('/admin')}}/manage_role">
+                  <i class="fa fa-circle-o"></i> <span>Role Master</span>
+                  <span class="pull-right-container">
+                  </span>
+                </a>
+              </li>
+               <li @if(Request::segment(2)=='manage_permission' || Request::segment(2)=='add_permission' || Request::segment(2)=='edit_permission') class="active" @endif>
+                <a href="{{url('/admin')}}/manage_permission">
+                  <i class="fa fa-circle-o"></i> <span>Role Permission</span>
+                  <span class="pull-right-container">
+                  </span>
+                </a>
+              </li>
+            </ul>
+        </li>
+        <li @if(Request::segment(2)=='manage_users' || Request::segment(2)=='useradd'|| Request::segment(2)=='useredit') class="active" @endif>
+          <a href="{{url('/admin')}}/manage_users">
+            <i class="fa fa-users"></i> <span>Users</span>
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
     @endif
+
         <li class="treeview @if(Request::segment(2)=='change_password') active @endif">
           <a href="#">
             <i class="fa fa-gear"></i> <span>Setting</span>

@@ -21,6 +21,7 @@ class User extends Model
 		"mobile_no",
 		"state",
 		"city",
+		"area",
 		"pincode",
 		"gst_no",
 		"admin_approval",

@@ -26,7 +26,13 @@
               <h3 class="box-title">{{ $page_name." ".$title }}</h3>
               <a href="{{url('/admin')}}/add_user" class="btn btn-primary btn-xs" style="float: right;">Add Vendor</a>
             </div>
-            
+            <div class="box-header">
+              <div class="box-body">
+                <div class="form-group">
+                   <a class="btn bg-navy btn-xs" href="{{url('/admin')}}/commercial_download_services_file" style="float: right;" >Download Excel</a>
+                </div>
+              </div>
+            </div>
             
             <!-- /.box-header -->
             <div class="box-body" style="overflow-x:auto;">

@@ -56,6 +56,10 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 
 	Route::get('/manage_booking',		 				'Admin\BookingController@index');
 	Route::get('/book_you_service',		 				'Admin\BookingController@book_you_service');
+	Route::get('/download_services_file',		 			'Admin\BookingController@download_services');
+	Route::get('/nexa_download_services_file',		 			'Admin\BookingController@nexa_download_services');
+	Route::get('/commercial_download_services_file',		 			'Admin\BookingController@commercial_download_services');
+
 	Route::get('/booked_value_added_services',		 				'Admin\BookingController@booked_value_added_services');
 	Route::get('/nexa_booked_value_added_services',		 				'Admin\BookingController@nexa_booked_value_added_services');
 
@@ -103,12 +107,11 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 
 
 	Route::get('/download_bookings',		 			'Admin\BookingController@download_bookings');
-	Route::get('/nexa_download_bookings',		 			'Admin\BookingController@nexa_download_bookings');
-	Route::get('/download_nexa_showroom_visits',		 			'Admin\BookingController@download_nexa_showroom_visits');
-	Route::get('/commercial_download_bookings',		 			'Admin\BookingController@commercial_download_bookings');
-	Route::get('/download_commercial_showroom_visits',		 			'Admin\BookingController@download_commercial_showroom_visits');
-
-
+	Route::get('/nexa_download_bookings',		 		'Admin\BookingController@nexa_download_bookings');
+	Route::get('/download_nexa_showroom_visits',		'Admin\BookingController@download_nexa_showroom_visits');
+	Route::get('/commercial_download_bookings',		 	'Admin\BookingController@commercial_download_bookings');
+	Route::get('/download_commercial_showroom_visits',  'Admin\BookingController@download_commercial_showroom_visits');
+	
 	Route::get('/manage_delivery_boy',		 		'Admin\BookingController@delivery_index');
 	Route::get('/add_booking',		 					'Admin\BookingController@add');
 	Route::post('/store_booking',		 				'Admin\BookingController@store');
@@ -221,5 +224,39 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/update_commercial_location/{id}',		 		'Admin\BookingController@update_commercial_location');
 	Route::get('/view_commercial_location/{id}',		 		'Admin\BookingController@view_commercial_location');
 	Route::get('/delete_commercial_location/{id}',		 		'Admin\BookingController@delete_commercial_location');
+
+	Route::get('/manage_users',		 'Admin\UserController@index');
+	Route::get('/add_user',		 	 'Admin\UserController@add');
+	Route::post('/store_user',		 'Admin\UserController@store');
+	Route::get('/edit_user/{id}',	 'Admin\UserController@edit');
+	Route::post('/update_user/{id}', 'Admin\UserController@update');
+	Route::get('/delete_user/{id}',	 'Admin\UserController@delete');
+	Route::get('/getArea',	 		 'Admin\UserController@getArea');
+
+	//Module Master Routes
+	Route::get('/manage_module',		 'Admin\ModuleController@index');
+	Route::get('/add_module',		 	 'Admin\ModuleController@add');
+	Route::post('/store_module',		 'Admin\ModuleController@store');
+	Route::get('/edit_module/{id}',	 	 'Admin\ModuleController@edit');
+	Route::post('/update_module/{id}', 	 'Admin\ModuleController@update');
+	Route::get('/delete_module/{id}',	 'Admin\ModuleController@delete');
+
+	//Role Master Routes
+	Route::get('/manage_role',		 'Admin\RoleController@index');
+	Route::get('/add_role',		 	 'Admin\RoleController@add');
+	Route::post('/store_role',		 'Admin\RoleController@store');
+	Route::get('/edit_role/{id}',	 'Admin\RoleController@edit');
+	Route::post('/update_role/{id}', 'Admin\RoleController@update');
+	Route::get('/delete_role/{id}',	 'Admin\RoleController@delete');
+
+	//Role Permisssions
+	Route::get('/manage_permission',		 'Admin\PermissionController@index');
+	Route::get('/add_permission',		 	 'Admin\PermissionController@add');
+	Route::post('/store_permission',		 'Admin\PermissionController@store');
+	Route::get('/edit_permission/{id}',	     'Admin\PermissionController@edit');
+	Route::post('/update_permission/{id}',   'Admin\PermissionController@update');
+	Route::get('/delete_permission/{id}',	 'Admin\PermissionController@delete');
+	Route::get('/getmenu',	 				 'Admin\PermissionController@get_menu');
+
 	
 });
