@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\Session;
+
 //use Session;
 
 class AuthController extends Controller
@@ -38,7 +39,18 @@ class AuthController extends Controller
             'email'    => $request->input('email'),
             'password' => $request->input('password'),
         ];
-
+        
+        //get_role_permission  
+        if($arr_user->role!='admin'){
+        $get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->role,'type_id'=>$arr_user->type_id])->select('permission_access')->get()->toarray();
+        $permission_arr = explode(",",$get_permission_data[0]->permission_access);
+        //get module list type  wise 
+        $get_module_data = \DB::table('module')->where(['type_id'=>$arr_user->type_id])->get()->toarray();
+        //get module type
+        $get_module_type = \DB::table('module_type')->where(['type_id'=>$arr_user->type_id])->select('type_name')->first();
+        }
+        
+        //dd($arr_user);
        /* if ($request->input('remember')=='on')
         {
             setcookie("adminemail",$request->email,time()+ 3600);
@@ -62,6 +74,17 @@ class AuthController extends Controller
             //Session::put('user', $arr_user);   
             $request->session()->put("user",$arr_user);
             $request->session()->save();  
+            if($arr_user->role!='admin'){
+                $request->session()->put("permissions",$permission_arr);
+                $request->session()->save(); 
+
+                $request->session()->put("module_data",$get_module_data);
+                $request->session()->save();
+
+                 $request->session()->put("module_type",$get_module_type);
+                $request->session()->save();
+            }
+
             return redirect('admin/dashbord');
         }
         else

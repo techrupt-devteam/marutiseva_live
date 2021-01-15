@@ -44,6 +44,14 @@
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
+                        <label for="module_name">Module Url<span style="color:red;" >*</span></label>
+                        <input type="text" class="form-control" id="module_url" name="module_url" placeholder="Module URL" required="true" value="{{$data['module_url']}}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="box-body">
+                      <div class="form-group">
                         <label for="type">Type<span style="color:red;" >*</span></label>
                         <select name="type_id" id="type_id" class="form-control" required="true">
                          <option value="">-Select-</option>  
@@ -72,21 +80,4 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script type="text/javascript">
-     $("select.city").change(function() {
-      var selectedCity = $(".city option:selected").val();
-      $.ajax({
-        type: "get",
-        url: "getArea",
-        data: {
-          city: selectedCity
-        }
-      }).done(function(data) {
-           var result = data.split('|');
-           $("#area").html(result[0]);
-         
-      });
-    });
- </script>
 @endsection

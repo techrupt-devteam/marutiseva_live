@@ -36,27 +36,32 @@
                   <th>Email</th>
                   <th>City</th>
                   <th>Area</th>
+                  <th>Role</th>
+                  <th>Type</th>
                   <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
+
                   @foreach($data as $key=>$value)
                     <tr>
                       <td>
                         {{$key+1}}
                       </td>
-                      <td>{{$value['first_name']}} {{$value['last_name']}}</td>
-                      <td>{{$value['email']}}</td>
-                      <td>{{$value['city']}}</td>
-                      <td>{{$value['area']}}</td>
+                      <td>{{$value->first_name}} {{$value->last_name}}</td>
+                      <td>{{$value->email}}</td>
+                      <td>{{$value->city}}</td>
+                      <td>{{$value->area}}</td>
+                      <td>{{$value->role_name}}</td>
+                      <td>{{$value->type_name}}</td>
                       <td>
-                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value['id']}}" title="Edit">
+                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value->id}}" title="Edit">
                           <i class="fa fa-edit"></i>
                         </a>
-                        <!-- <a href="{{url('/admin')}}/view_{{$url_slug}}/{{$value['id']}}" title="View">
+                        <!-- <a href="{{url('/admin')}}/view_{{$url_slug}}/{{$value->id}}" title="View">
                           <i class="fa fa-eye"></i>
                         </a> -->
-                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{$value['id']}}" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{$value->id}}" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
                           <i class="fa fa-trash"></i>
                         </a>
                       </td>

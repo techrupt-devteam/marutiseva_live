@@ -28,6 +28,7 @@ class User extends Model
 		"remember_token",
 		"last_login",
 		"role",
+		"type_id",
 		"company_name",
 		"company_address",
 		"created_at",

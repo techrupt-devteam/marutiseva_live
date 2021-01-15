@@ -50,7 +50,9 @@ class ModuleController extends Controller
     {
         $validator = Validator::make($request->all(), [
                 'module_name' => 'required',
-                'type_id'  => 'required'
+                'type_id'  => 'required',
+                'module_url'  => 'required'
+
             ]);
 
         if ($validator->fails()) 
@@ -66,9 +68,10 @@ class ModuleController extends Controller
             return \Redirect::back();
         }
 
-        $arr_data                 = [];
+        $arr_data                  = [];
         $arr_data['module_name']   = $request->input('module_name');
-        $arr_data['type_id']    = $request->input('type_id');
+        $arr_data['type_id']       = $request->input('type_id');
+        $arr_data['module_url']    = $request->input('module_url');
         $user = $this->base_model->create($arr_data);
       
         if(!empty($user))
@@ -105,7 +108,8 @@ class ModuleController extends Controller
     {
         $validator = Validator::make($request->all(), [
                 'module_name' => 'required',
-                'type_id'  => 'required'
+                'type_id'  => 'required',
+                'module_url'  => 'required'
             ]);
         if ($validator->fails()) 
         {
@@ -120,7 +124,8 @@ class ModuleController extends Controller
         }
         $arr_data               = [];
         $arr_data['module_name']   = $request->input('module_name');
-        $arr_data['type_id']    = $request->input('type_id');
+        $arr_data['module_url']    = $request->input('module_url');
+        $arr_data['type_id']       = $request->input('type_id');
         $module_update = $this->base_model->where(['module_id'=>$id])->update($arr_data);
         Session::flash('success', 'Success! Record update successfully.');
         return \Redirect::to('admin/manage_module');

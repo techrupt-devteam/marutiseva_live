@@ -231,7 +231,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::get('/edit_user/{id}',	 'Admin\UserController@edit');
 	Route::post('/update_user/{id}', 'Admin\UserController@update');
 	Route::get('/delete_user/{id}',	 'Admin\UserController@delete');
-	Route::get('/getArea',	 		 'Admin\UserController@getArea');
+	Route::post('/getArea',	 		 'Admin\UserController@getArea');
 
 	//Module Master Routes
 	Route::get('/manage_module',		 'Admin\ModuleController@index');
@@ -257,6 +257,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/update_permission/{id}',   'Admin\PermissionController@update');
 	Route::get('/delete_permission/{id}',	 'Admin\PermissionController@delete');
 	Route::post('/getmenu',	 				 'Admin\PermissionController@get_menu');
+	Route::post('/getmenulist',	 			 'Admin\PermissionController@get_menu_list');
 
 	
 });

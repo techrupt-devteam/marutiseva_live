@@ -62,6 +62,11 @@ class PermissionController extends Controller
     public function get_menu(Request $request)
     {
        $type_id = $request->type_id;
+       $per_id  =  $request->per_id;
+       if(!empty($per_id)){
+       $get_permission_data = $this->base_model->where(['per_id'=>$per_id])->select('permission_access')->first();
+       $permission_arr = explode(",",$get_permission_data['permission_access']);
+       }
        $model_list = $this->module->where(['type_id'=>$type_id])->get();
        $html="";
        $html.='<div class="col-md-6" style="margin-left: 12px;">
@@ -75,16 +80,30 @@ class PermissionController extends Controller
                 </thead><tbody>';
         $i=1;
         foreach ($model_list as $value) {
-          $html.='<tr>
+
+          if(!empty($per_id))   
+          {
+            $html.='<tr>
                     <td>'.$i.') </td>
                     <td>'.$value['module_name'].'</td>
-                    <td class="text-center"> <input type="checkbox" class="form-check-input" name="permission_access[]" id="" value="'.$value['module_id'].'"></td>
+                    <td class="text-center"> <input type="checkbox" class="form-check-input" name="permission_access[]" id="" value="'.$value['module_id'].'" '.(in_array($value['module_id'], $permission_arr) ? 'checked' : '').'></td>
                   </tr>';
+          }
+          else
+          {
+           $html.='<tr>
+                    <td>'.$i.') </td>
+                    <td>'.$value['module_name'].'</td>
+                    <td class="text-center"> <input type="checkbox" class="form-check-input" name="permission_access[]" id="" value="'.$value['module_id'].'" ></td>
+                  </tr>';
+          }
+
         $i++;
        }
        $html.="</tbody></table></div>";
        return $html;
     }
+
 
 
 
@@ -102,7 +121,7 @@ class PermissionController extends Controller
 
         
         $is_exist = $this->base_model->where(['role_id'=>$request->input('role_id'),'type_id'=>$request->input('type_id')])->count();
-
+       
         if($is_exist)
         {
             Session::flash('error', "Permission already exist!");
@@ -147,35 +166,79 @@ class PermissionController extends Controller
         $data['title']     = $this->title;
         return view($this->folder_path.'edit',$data);
     }
+    
+    public function get_menu_list(Request $request)
+    {
 
+       $type_id = $request->type_id;
+       $per_id  =  $request->per_id;
+
+       $model_list = $this->module->where(['type_id'=>$type_id])->get();
+       $get_permission_data = $this->base_model->where(['per_id'=>$per_id])->select('permission_access')->first();
+       $permission_arr = explode(",",$get_permission_data['permission_access']);
+       /*print_r($permission_arr);
+       exit;*/
+       $html="";
+       $html.='<div class="col-md-6" style="margin-left: 12px;">
+                <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                      <th>Sr.No</th>
+                      <th>Module Name</th>
+                      <th class="text-center">Permission</th>
+                    </tr>
+                </thead><tbody>';
+        $i=1;
+        //print_r($permission_arr);
+        foreach ($model_list as $key => $value) 
+        {   
+          
+            $html.='<tr>
+                <td>'.$i.') </td>
+                <td>'.$value['module_name'].'</td>
+                <td class="text-center">';
+                $html.='<input type="checkbox" class="form-check-input" name="permission_access[]"  value="'.$value['module_id'].'" '.(in_array($value['module_id'], $permission_arr) ? 'checked' : '').'  >';
+                $html.='</td>
+               </tr>';       
+            $i++;
+       }
+       
+       $html.="</tbody></table></div>";
+       return $html;
+    }
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-                'module_name' => 'required',
-                'type_id'  => 'required'
+                'role_id' => 'required',
+                'type_id'  => 'required',
             ]);
         if ($validator->fails()) 
         {
             return $validator->errors()->all();
         }
-        $is_exist = $this->base_model->where('module_id','<>',$id)->where(['module_name'=>$request->input('module_name'),'type_id'=>$request->input('type_id')])
+        $is_exist = $this->base_model->where('per_id','<>',$id)->where(['role_id'=>$request->input('role_id'),'type_id'=>$request->input('type_id')])
                     ->count();
+        
         if($is_exist)
         {
-            Session::flash('error', "Record already exist!");
+            Session::flash('error', "Role already exist!");
             return \Redirect::back();
         }
+
         $arr_data               = [];
-        $arr_data['module_name']   = $request->input('module_name');
-        $arr_data['type_id']    = $request->input('type_id');
-        $module_update = $this->base_model->where(['module_id'=>$id])->update($arr_data);
+        $permissions_data = implode(",",$request->input('permission_access'));
+        $arr_data                       = [];
+        $arr_data['role_id']            = $request->input('role_id');
+        $arr_data['type_id']            = $request->input('type_id');
+        $arr_data['permission_access']  = $permissions_data;
+        $module_update = $this->base_model->where(['per_id'=>$id])->update($arr_data);
         Session::flash('success', 'Success! Record update successfully.');
-        return \Redirect::to('admin/manage_module');
+        return \Redirect::to('admin/manage_permission');
     }
 
     public function delete($id)
     {
-        $this->base_model->where(['module_id'=>$id])->delete();
+        $this->base_model->where(['per_id'=>$id])->delete();
         Session::flash('success', 'Success! Record deleted successfully.');
         return \Redirect::back();
     }

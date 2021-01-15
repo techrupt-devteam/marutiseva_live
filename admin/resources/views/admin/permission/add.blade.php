@@ -78,12 +78,13 @@
   </div>
   <!-- /.content-wrapper -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
   <script type="text/javascript">
   $("select.type_id").change(function() {
       var type_id = $(".type_id option:selected").val();
       $.ajax({
         type: "post",
-        url: "getmenu",
+        url: "{{url('/admin')}}/getmenu",
         data: {
           type_id: type_id
         }

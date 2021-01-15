@@ -33,6 +33,7 @@
                 <tr>
                   <th>Sr.No.</th>
                   <th>Name</th>
+                  <th>URL</th>
                   <th>Type</th>
                   <th>Action</th>
                 </tr>
@@ -43,6 +44,7 @@
                     <tr>
                       <td>{{$key+1}}</td>
                       <td>{{$value['module_name']}}</td>
+                      <td>{{$value['module_url']}}</td>
                       <td>{{$value['moduletype']['type_name']}}</td>
                       <td>
                         <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value['module_id']}}" title="Edit">

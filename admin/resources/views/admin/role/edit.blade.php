@@ -59,21 +59,4 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script type="text/javascript">
-     $("select.city").change(function() {
-      var selectedCity = $(".city option:selected").val();
-      $.ajax({
-        type: "get",
-        url: "getArea",
-        data: {
-          city: selectedCity
-        }
-      }).done(function(data) {
-           var result = data.split('|');
-           $("#area").html(result[0]);
-         
-      });
-    });
- </script>
 @endsection

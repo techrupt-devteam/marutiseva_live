@@ -40,6 +40,14 @@
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
+                        <label for="module_name">Module Url<span style="color:red;" >*</span></label>
+                        <input type="text" class="form-control" id="module_url" name="module_url" placeholder="Module URL" required="true">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="box-body">
+                      <div class="form-group">
                         <label for="type">Type<span style="color:red;" >*</span></label>
                         <select name="type_id" id="type_id" class="form-control" required="true">
                          <option value="">-Select-</option>  

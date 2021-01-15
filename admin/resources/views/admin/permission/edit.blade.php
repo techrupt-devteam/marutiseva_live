@@ -40,7 +40,8 @@
                          <select name="role_id" id="role_id" class="form-control" required="true">
                          <option value="">-Select-</option>  
                            @foreach($role as $rvalue)
-                             <option value="{{$rvalue->role_id}}">{{$rvalue->role_name}}</option>  
+                              @php $seleced = ($data['role_id']==$rvalue->role_id)? 'selected':'';@endphp
+                             <option value="{{$rvalue->role_id}}" {{$seleced}}>{{$rvalue->role_name}}</option>  
                            @endforeach
                          </select>
                       </div>
@@ -53,7 +54,8 @@
                          <select name="type_id" id="type_id" class="form-control type_id" required="true">
                          <option value="">-Select-</option>  
                            @foreach($type as $tvalue)
-                             <option value="{{$tvalue->type_id}}">{{$tvalue->type_name}}</option>  
+                              @php $seleced = ($data['type_id']==$tvalue->type_id)? 'selected':'';@endphp 
+                             <option value="{{$tvalue->type_id}}" {{$seleced}}>{{$tvalue->type_name}}</option>  
                            @endforeach
                          </select>
                       </div>
@@ -82,20 +84,45 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+ 
+
+
   <script type="text/javascript">
-     $("select.city").change(function() {
-      var selectedCity = $(".city option:selected").val();
+    $(document).ready(function() {
+       getmenulist();   
+    });
+
+
+    function getmenulist() 
+    {        
+        var type_id = $("#type_id").val();            
+        var per_id =  <?php echo $data['per_id']; ?>;            
+        //$("#city_id_").empty();
+
+        $.ajax({
+            url: "{{url('/admin')}}/getmenulist",
+            type: 'post',
+            data: {type_id: type_id,per_id: per_id},
+            success: function (data) 
+            {
+              $("#menudiv").html(data);
+            }
+        });
+    };
+
+   $("select.type_id").change(function() {
+      var type_id = $(".type_id option:selected").val();
+      var per_id =  <?php echo $data['per_id']; ?>;     
       $.ajax({
-        type: "get",
-        url: "getArea",
+        type: "post",
+        url: "{{url('/admin')}}/getmenu",
         data: {
-          city: selectedCity
+          type_id: type_id,per_id:per_id
         }
       }).done(function(data) {
            var result = data.split('|');
-           $("#area").html(result[0]);
-         
+           $("#menudiv").html(result[0]);
       });
     });
  </script>

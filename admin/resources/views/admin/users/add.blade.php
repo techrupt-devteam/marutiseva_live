@@ -92,7 +92,38 @@
                       </div>
                     </div>
                   </div>
+                 
                 </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                   <div class="col-md-4">
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="oldpassword">Role<span style="color:red;" >*</span></label>
+                         <select name="role" id="role" class="form-control" required="true">
+                         <option value="">-Select-</option>  
+                           @foreach($role as $rvalue)
+                             <option value="{{$rvalue->role_id}}">{{$rvalue->role_name}}</option>  
+                           @endforeach
+                         </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="role_name">Select Type<span style="color:red;" >*</span></label>
+                         <select name="type_id" id="type_id" class="form-control" required="true">
+                         <option value="">-Select-</option>  
+                           @foreach($type as $tvalue)
+                             <option value="{{$tvalue->type_id}}">{{$tvalue->type_name}}</option>  
+                           @endforeach
+                         </select>
+                      </div>
+                    </div>
+                  </div>
+                 </div>  
               </div>
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary pull-right">Submit</button>
@@ -114,7 +145,7 @@
       var selectedCity = $(".city option:selected").val();
       $.ajax({
         type: "POST",
-        url: "getArea",
+        url: "{{url('/admin')}}/getArea",
         data: {
           city: selectedCity
         }

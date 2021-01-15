@@ -1,6 +1,11 @@
 <?php 
   $login_user_details  = \Sentinel::check();
   $session_user = Session::get('user');
+  if($session_user->role!='admin'){
+    $session_module = Session::get('module_data');
+    $session_module_type = Session::get('module_type');
+    $session_permissions = Session::get('permissions');
+  }
 ?>
  <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
@@ -24,8 +29,8 @@
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
         </li>
-       <!-- @if($session_user->role=='admin')
-        --><li class="treeview">
+        @if($session_user->role=='admin')
+          <li class="treeview">
           <a href="#">
             <i class="fa fa-television"></i> <span>Seva</span>
             <span class="pull-right-container">
@@ -339,14 +344,39 @@
               </li>
             </ul>
         </li>
-        <li @if(Request::segment(2)=='manage_users' || Request::segment(2)=='useradd'|| Request::segment(2)=='useredit') class="active" @endif>
+        <li @if(Request::segment(2)=='manage_users' || Request::segment(2)=='add_user'|| Request::segment(2)=='edi_usert') class="active" @endif>
           <a href="{{url('/admin')}}/manage_users">
             <i class="fa fa-users"></i> <span>Users</span>
             <span class="pull-right-container">
             </span>
           </a>
         </li>
+    @else
+    <!--------------------Dynamic Menu with permission---------------------->
+    <li class="treeview">
+        <a href="#">
+          <i class="fa fa-television"></i> <span>{{$session_module_type->type_name}}</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          @foreach($session_module as $module_value)
+            @if(in_array($module_value->module_id,$session_permissions))
+            <li>
+              <a href="{{url('/admin')}}/{{$module_value->module_url}}">
+                <i class="fa fa-circle-o"></i> <span>{{$module_value->module_name}}</span>
+                <span class="pull-right-container">
+                </span>
+              </a>
+            </li>
+            @endif
+          @endforeach
+        </ul>
+    </li>
     @endif
+
+
 
         <li class="treeview @if(Request::segment(2)=='change_password') active @endif">
           <a href="#">
