@@ -30,7 +30,7 @@
           </a>
         </li>
         @if($session_user->role=='admin')
-          <li class="treeview">
+          <li class="treeview @if(Request::segment(2)=='manage_booking' || Request::segment(2)=='book_you_service' || Request::segment(2)=='book_you_service'||Request::segment(2)=='test_drive' || Request::segment(2)=='test_drive'||Request::segment(2)=='quotations' || Request::segment(2)=='quotations'||Request::segment(2)=='insurance' || Request::segment(2)=='insurance'||Request::segment(2)=='finance' || Request::segment(2)=='finance'||Request::segment(2)=='enquiry' || Request::segment(2)=='enquiry'||Request::segment(2)=='offer_enquiry' || Request::segment(2)=='offer_enquiry'||Request::segment(2)=='locations' || Request::segment(2)=='locations'||Request::segment(2)=='offers' || Request::segment(2)=='offers'||Request::segment(2)=='value_add_services' || Request::segment(2)=='value_add_services'||Request::segment(2)=='booked_value_added_services' || Request::segment(2)=='booked_value_added_services') active @endif">
           <a href="#">
             <i class="fa fa-television"></i> <span>Seva</span>
             <span class="pull-right-container">
@@ -124,7 +124,7 @@
         </li>
           </ul>
         </li>
-         <li class="treeview">
+         <li class="treeview  @if(Request::segment(2)=='manage_nexa_booking' || Request::segment(2)=='view_nexa_booking'||Request::segment(2)=='nexa_book_you_service' || Request::segment(2)=='nexa_book_you_service'||Request::segment(2)=='nexa_showroom_visits' || Request::segment(2)=='nexa_showroom_visits'||Request::segment(2)=='nexa_test_drive' || Request::segment(2)=='nexa_test_drive'||Request::segment(2)=='nexa_quotations' || Request::segment(2)=='nexa_quotations'||Request::segment(2)=='nexa_insurance' || Request::segment(2)=='nexa_insuranc'||Request::segment(2)=='nexa_finance' || Request::segment(2)=='nexa_finance'||Request::segment(2)=='nexa_feedback' || Request::segment(2)=='nexa_feedback'||Request::segment(2)=='nexa_enquiry' || Request::segment(2)=='nexa_enquiry'||Request::segment(2)=='nexa_offer_enquiry' || Request::segment(2)=='nexa_offer_enquiry'||Request::segment(2)=='nexa_locations' || Request::segment(2)=='nexa_locations'||Request::segment(2)=='nexa_offers' || Request::segment(2)=='nexa_offers'||Request::segment(2)=='nexa_home_banner' || Request::segment(2)=='nexa_home_banner'||Request::segment(2)=='nexa_value_add_services' || Request::segment(2)=='nexa_value_add_services') active @endif">
           <a href="#">
             <i class="fa fa-television"></i> <span>Nexa</span>
             <span class="pull-right-container">
@@ -239,7 +239,7 @@
         </li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview @if(Request::segment(2)=='manage_commercial_booking' || Request::segment(2)=='commercial_book_you_service' || Request::segment(2)=='commercial_book_you_service'||Request::segment(2)=='commercial_showroom_visits' || Request::segment(2)=='commercial_showroom_visits'||Request::segment(2)=='commercial_feedback' || Request::segment(2)=='commercial_feedback'||Request::segment(2)=='commercial_enquiry' || Request::segment(2)=='commercial_enquiry'||Request::segment(2)=='commercial_offer_enquiry' || Request::segment(2)=='commercial_offer_enquiry'||Request::segment(2)=='commercial_locations' || Request::segment(2)=='commercial_locations'||Request::segment(2)=='commercial_offers' || Request::segment(2)=='commercial_offers' ||Request::segment(2)=='comm_home_banner' || Request::segment(2)=='comm_home_banner') active @endif">
           <a href="#">
             <i class="fa fa-television"></i> <span>Commercial</span>
             <span class="pull-right-container">
@@ -353,7 +353,7 @@
         </li>
     @else
     <!--------------------Dynamic Menu with permission---------------------->
-    <li class="treeview">
+    <li class="treeview  @if(Request::segment(2)=='manage_booking' || Request::segment(2)=='book_you_service' || Request::segment(2)=='book_you_service'||Request::segment(2)=='test_drive' || Request::segment(2)=='test_drive'||Request::segment(2)=='quotations' || Request::segment(2)=='quotations'||Request::segment(2)=='insurance' || Request::segment(2)=='insurance'||Request::segment(2)=='finance' || Request::segment(2)=='finance'||Request::segment(2)=='enquiry' || Request::segment(2)=='enquiry'||Request::segment(2)=='offer_enquiry' || Request::segment(2)=='offer_enquiry'||Request::segment(2)=='locations' || Request::segment(2)=='locations'||Request::segment(2)=='offers' || Request::segment(2)=='offers'||Request::segment(2)=='value_add_services' || Request::segment(2)=='value_add_services'||Request::segment(2)=='booked_value_added_services' || Request::segment(2)=='booked_value_added_services'||Request::segment(2)=='manage_nexa_booking' || Request::segment(2)=='view_nexa_booking'||Request::segment(2)=='nexa_book_you_service' || Request::segment(2)=='nexa_book_you_service'||Request::segment(2)=='nexa_showroom_visits' || Request::segment(2)=='nexa_showroom_visits'||Request::segment(2)=='nexa_test_drive' || Request::segment(2)=='nexa_test_drive'||Request::segment(2)=='nexa_quotations' || Request::segment(2)=='nexa_quotations'||Request::segment(2)=='nexa_insurance' || Request::segment(2)=='nexa_insuranc'||Request::segment(2)=='nexa_finance' || Request::segment(2)=='nexa_finance'||Request::segment(2)=='nexa_feedback' || Request::segment(2)=='nexa_feedback'||Request::segment(2)=='nexa_enquiry' || Request::segment(2)=='nexa_enquiry'||Request::segment(2)=='nexa_offer_enquiry' || Request::segment(2)=='nexa_offer_enquiry'||Request::segment(2)=='nexa_locations' || Request::segment(2)=='nexa_locations'||Request::segment(2)=='nexa_offers' || Request::segment(2)=='nexa_offers'||Request::segment(2)=='nexa_home_banner' || Request::segment(2)=='nexa_home_banner'||Request::segment(2)=='nexa_value_add_services' || Request::segment(2)=='nexa_value_add_services'||Request::segment(2)=='manage_commercial_booking' || Request::segment(2)=='commercial_book_you_service' || Request::segment(2)=='commercial_book_you_service'||Request::segment(2)=='commercial_showroom_visits' || Request::segment(2)=='commercial_showroom_visits'||Request::segment(2)=='commercial_feedback' || Request::segment(2)=='commercial_feedback'||Request::segment(2)=='commercial_enquiry' || Request::segment(2)=='commercial_enquiry'||Request::segment(2)=='commercial_offer_enquiry' || Request::segment(2)=='commercial_offer_enquiry'||Request::segment(2)=='commercial_locations' || Request::segment(2)=='commercial_locations'||Request::segment(2)=='commercial_offers' || Request::segment(2)=='commercial_offers' ||Request::segment(2)=='comm_home_banner' || Request::segment(2)=='comm_home_banner'|| Request::segment(2)=='nexa_booked_value_added_services') active @endif">
         <a href="#">
           <i class="fa fa-television"></i> <span>{{$session_module_type->type_name}}</span>
           <span class="pull-right-container">
@@ -363,7 +363,7 @@
         <ul class="treeview-menu">
           @foreach($session_module as $module_value)
             @if(in_array($module_value->module_id,$session_permissions))
-            <li>
+            <li <?php if(Request::segment(2)==$module_value->module_url){?> class="active" <?php }?>>
               <a href="{{url('/admin')}}/{{$module_value->module_url}}">
                 <i class="fa fa-circle-o"></i> <span>{{$module_value->module_name}}</span>
                 <span class="pull-right-container">

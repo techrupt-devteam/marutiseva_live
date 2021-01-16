@@ -21,6 +21,7 @@
       <div class="row">
         <div class="col-xs-12">
           @include('admin.layout._status_msg')
+           
           <div class="box">
             <div class="box-header" style="display: none;">
               <h3 class="box-title">{{ $page_name." ".$title }}</h3>
@@ -29,10 +30,10 @@
              <div class="box-header">
                   <div class="box-body">
                     <div class="form-group">
-                       <a class="btn bg-navy btn-xs" href="{{url('/admin')}}/download_services_file" style="float: right;" >Download Excel</a>
+                       <a class="btn bg-navy btn-xs pull-center" href="{{url('/admin')}}/download_services_file" style="float: right;" >Download Excel</a>
                     </div>
                   </div>
-              </div>
+              </div> 
             
             <!-- /.box-header -->
             <div class="box-body" style="overflow-x:auto;">
@@ -117,5 +118,4 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
- 
 @endsection

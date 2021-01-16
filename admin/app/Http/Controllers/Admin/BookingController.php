@@ -569,10 +569,12 @@ class BookingController extends Controller
     public function book_you_service()
     {
         $arr_data = [];
-        $data     = \DB::table('book_your_service')
+        $data= $this->get_list('book_your_service','yes');
+        //dd($data);
+        /*$data     = \DB::table('book_your_service')
                         //->where('kyc_document_type','!=',null)
                         ->orderBy('id','DESC')
-                        ->get();
+                        ->get();*/
 
         if(!empty($data))
         {
@@ -588,10 +590,11 @@ class BookingController extends Controller
     public function booked_value_added_services()
     {
         $arr_data = [];
-        $data     = \DB::table('scheduled_value_added_service')
+        /*$data     = \DB::table('scheduled_value_added_service')
                         //->where('kyc_document_type','!=',null)
                         ->orderBy('id','DESC')
-                        ->get();
+                        ->get();*/
+        $data =$this->get_list('scheduled_value_added_service','yes');
 
         if(!empty($data))
         {
@@ -608,10 +611,12 @@ class BookingController extends Controller
     public function nexa_booked_value_added_services()
     {
         $arr_data = [];
-        $data     = \DB::table('nexa_scheduled_value_added_service')
+/*        $data     = \DB::table('nexa_scheduled_value_added_service')
                         //->where('kyc_document_type','!=',null)
                         ->orderBy('id','DESC')
                         ->get();
+*/
+         $data =$this->get_list('scheduled_value_added_service','yes');
 
         if(!empty($data))
         {
@@ -628,11 +633,12 @@ class BookingController extends Controller
     public function test_drive()
     {
         $arr_data = [];
-        $data     = \DB::table('test_drive')
+        /*$data     = \DB::table('test_drive')
                         //->where('kyc_document_type','!=',null)
                         ->orderBy('id','DESC')
                         ->get();
-
+        */
+        $data = $this->get_list('test_drive');
         if(!empty($data))
         {
             $arr_data = $data->toArray();
@@ -668,10 +674,11 @@ class BookingController extends Controller
     public function finance()
     {
         $arr_data = [];
-        $data     = \DB::table('finance')
+       /*$data     = \DB::table('finance')
                         //->where('kyc_document_type','!=',null)
                         ->orderBy('id','DESC')
-                        ->get();
+                        ->get();*/
+        $data = $this->get_list('finance');               
 
         if(!empty($data))
         {
@@ -688,11 +695,11 @@ class BookingController extends Controller
     public function insurance()
     {
         $arr_data = [];
-        $data     = \DB::table('insurance')
+        /*$data     = \DB::table('insurance')
                         //->where('kyc_document_type','!=',null)
                         ->orderBy('id','DESC')
-                        ->get();
-
+                        ->get();*/
+        $data = $this->get_list('insurance');
         if(!empty($data))
         {
             $arr_data = $data->toArray();
@@ -768,10 +775,11 @@ class BookingController extends Controller
     public function nexa_book_you_service()
     {
         $arr_data = [];
-        $data     = \DB::table('nexa_book_your_service')
+       /* $data     = \DB::table('nexa_book_your_service')
                         //->where('kyc_document_type','!=',null)
                         ->orderBy('id','DESC')
-                        ->get();
+                        ->get();*/
+        $data= $this->get_list('nexa_book_your_service','yes');
 
         if(!empty($data))
         {
@@ -788,10 +796,10 @@ class BookingController extends Controller
     public function nexa_test_drive()
     {
         $arr_data = [];
-        $data     = \DB::table('nexa_test_drive')
-                        //->where('kyc_document_type','!=',null)
+        /*$data     = \DB::table('nexa_test_drive')
                         ->orderBy('id','DESC')
-                        ->get();
+                        ->get();*/
+        $data = $this->get_list('nexa_test_drive');
 
         if(!empty($data))
         {
@@ -826,10 +834,12 @@ class BookingController extends Controller
     public function nexa_insurance()
     {
         $arr_data = [];
-        $data     = \DB::table('nexa_insurance')
+        /*$data     = \DB::table('nexa_insurance')
                         //->where('kyc_document_type','!=',null)
                         ->orderBy('id','DESC')
-                        ->get();
+                        ->get();*/
+        $data = $this->get_list('nexa_insurance');
+
 
         if(!empty($data))
         {
@@ -846,10 +856,11 @@ class BookingController extends Controller
     public function nexa_finance()
     {
         $arr_data = [];
-        $data     = \DB::table('nexa_finance')
+       /* $data     = \DB::table('nexa_finance')
                         //->where('kyc_document_type','!=',null)
                         ->orderBy('id','DESC')
-                        ->get();
+                        ->get();*/
+         $data = $this->get_list('nexa_finance');
 
         if(!empty($data))
         {
@@ -926,10 +937,11 @@ class BookingController extends Controller
     public function commercial_book_you_service()
     {
         $arr_data = [];
-        $data     = \DB::table('commercial_book_your_service')
+       /* $data     = \DB::table('commercial_book_your_service')
                         //->where('kyc_document_type','!=',null)
                         ->orderBy('id','DESC')
-                        ->get();
+                        ->get();*/
+        $data= $this->get_list('commercial_book_your_service','yes');
 
         if(!empty($data))
         {
@@ -946,11 +958,27 @@ class BookingController extends Controller
     public function commercial_showroom_visits()
     {
         $arr_data = [];
-        $data     = \DB::table('commercial_showroom_visits')
+        /*$data     = \DB::table('commercial_showroom_visits')
                         //->where('kyc_document_type','!=',null)
                         ->orderBy('id','DESC')
                         ->get();
-                        // dd($data);
+                        // dd($data);*/
+
+        $session_user = Session::get('user');
+        if($session_user->role!='admin'){ 
+            $city = $session_user->city;
+            $area1 = $session_user->area;
+            $data = \DB::table('commercial_showroom_visits')
+                 ->where(['client_city'=>$city,'area'=>$area1])
+                 ->orderBy('id','DESC')
+                 ->get();
+        }
+        elseif($session_user->role=='admin')
+        {
+            $data = \DB::table('commercial_showroom_visits')->orderBy('id','DESC')->get();
+        }
+        
+
 
         if(!empty($data))
         {
@@ -1086,6 +1114,7 @@ public function commercial_feedback()
     //seva book your services   
     public function download_services(Request $request)
     {
+       
         $data     = \DB::table('book_your_service')
                         ->orderBy('id','DESC')
                         ->get();
@@ -3050,6 +3079,7 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+    
     public function store_nexa_home_banner(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -3100,6 +3130,7 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+    
     public function store_comm_home_banner(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -3150,6 +3181,7 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+    
     public function store_nexa_offer(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -3204,6 +3236,7 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+    
     public function store_commercial_offer(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -3298,6 +3331,7 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+    
     public function change_location_status($id)
     {
         $data =  \DB::table('locations')->where(['id'=>base64_decode($id)])->first();
@@ -3316,6 +3350,7 @@ public function commercial_feedback()
         }
         return \Redirect::to('admin/locations');
     }
+    
     public function edit_location($id)
     {
         $arr_data = [];
@@ -3326,6 +3361,7 @@ public function commercial_feedback()
         $data['title']     = 'Location';
         return view($this->folder_path.'edit_location',$data);
     }
+    
     public function edit_offer($id)
     {
         $arr_data = [];
@@ -3389,7 +3425,8 @@ public function commercial_feedback()
 
         return view($this->folder_path.'edit_nexa_offer',$data);
     }
-     public function edit_home_banner($id)
+    
+    public function edit_home_banner($id)
     {
         $arr_data = [];
         $arr_data     = \DB::table('nexa_home_banner')->where(['id'=>$id])->first();
@@ -3400,6 +3437,7 @@ public function commercial_feedback()
 
         return view($this->folder_path.'edit_home_banner',$data);
     }
+    
     public function edit_comm_home_banner($id)
     {
         $arr_data = [];
@@ -3445,7 +3483,7 @@ public function commercial_feedback()
     }
     
     public function update_location(Request $request,$id)
-   {
+    {
         $validator = Validator::make($request->all(), [
                 'city'     => 'required',
                 'area'     => 'required',
@@ -3484,8 +3522,9 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+    
     public function update_offer(Request $request,$id)
-   {
+    {
         $validator = Validator::make($request->all(), [
                 'car_maker'=> 'required',
                 'varient' => 'required',
@@ -3592,8 +3631,9 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+    
     public function update_nexa_home_banner(Request $request,$id)
-   {
+    {
         $validator = Validator::make($request->all(), [
                 'image'=> 'required',
             ]);
@@ -3641,8 +3681,9 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+    
     public function update_comm_home_banner(Request $request,$id)
-   {
+    {
         $validator = Validator::make($request->all(), [
                 'image'=> 'required',
             ]);
@@ -3690,8 +3731,9 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+
     public function update_commercial_offer(Request $request,$id)
-   {
+    {
         $validator = Validator::make($request->all(), [
                 'car_maker'=> 'required',
                 'varient' => 'required',
@@ -3703,8 +3745,6 @@ public function commercial_feedback()
         {
             return $validator->errors()->all();
         }
-
-        
 
         $arr_data             = [];
         $arr_data['car_maker']     = $request->input('car_maker');
@@ -3745,7 +3785,6 @@ public function commercial_feedback()
         }
     }
     
-    
     public function view_location($id)
     {
         $arr_data = [];
@@ -3759,6 +3798,7 @@ public function commercial_feedback()
         $data['title']     = 'Location';
         return view($this->folder_path.'view_location',$data);
     }
+
     public function view_offer($id)
     {
         $arr_data = [];
@@ -3772,6 +3812,7 @@ public function commercial_feedback()
         $data['title']     = 'Offer';
         return view($this->folder_path.'view_offer',$data);
     }
+
     public function view_nexa_home_banner($id)
     {
         $arr_data = [];
@@ -3785,6 +3826,7 @@ public function commercial_feedback()
         $data['title']     = 'Home Banner';
         return view($this->folder_path.'view_nexa_home_banner',$data);
     }
+
     public function view_comm_home_banner($id)
     {
         $arr_data = [];
@@ -3812,6 +3854,7 @@ public function commercial_feedback()
         $data['title']     = 'Offer';
         return view($this->folder_path.'view_nexa_offer',$data);
     }
+
     public function view_commercial_offer($id)
     {
         $arr_data = [];
@@ -3832,24 +3875,28 @@ public function commercial_feedback()
         Session::flash('success', 'Success! Record deleted successfully.');
         return \Redirect::back();
     }
+
     public function delete_offer($id)
     {
         \DB::table('offers')->where(['id'=>$id])->delete();
         Session::flash('success', 'Success! Record deleted successfully.');
         return \Redirect::back();
     }
+
     public function delete_nexa_offer($id)
     {
         \DB::table('nexa_offers')->where(['id'=>$id])->delete();
         Session::flash('success', 'Success! Record deleted successfully.');
         return \Redirect::back();
     }
+
     public function delete_nexa_home_banner($id)
     {
         \DB::table('nexa_home_banner')->where(['id'=>$id])->delete();
         Session::flash('success', 'Success! Record deleted successfully.');
         return \Redirect::back();
     }
+
     public function delete_comm_home_banner($id)
     {
         \DB::table('comm_home_banner')->where(['id'=>$id])->delete();
@@ -3864,7 +3911,6 @@ public function commercial_feedback()
         return \Redirect::back();
     }
     
-
     public function nexa_locations(Request $request)
     {
         $arr_data = [];
@@ -3877,6 +3923,7 @@ public function commercial_feedback()
         $data['title']     = $this->title;
         return view($this->folder_path.'nexa_locations',$data);
     }
+
     public function add_nexa_location(Request $request)
     {
         $data['page_name'] = "Add";
@@ -3884,6 +3931,7 @@ public function commercial_feedback()
         $data['title']     = 'Location';
         return view($this->folder_path.'add_nexa_location',$data);
     }
+
     public function store_nexa_location(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -3912,6 +3960,7 @@ public function commercial_feedback()
         $arr_data['area']     = $request->input('area');
         $arr_data['is_active']= '1';
         $location             = \DB::table('nexa_locations')->insert($arr_data);
+        $location             = \DB::table('locations')->insert($arr_data);
         if (!empty($location))
         {
             Session::flash('success', 'Success! Record added successfully.');
@@ -3923,6 +3972,7 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+
     public function change_nexa_location_status($id)
     {
         $data =  \DB::table('nexa_locations')->where(['id'=>base64_decode($id)])->first();
@@ -3941,6 +3991,7 @@ public function commercial_feedback()
         }
         return \Redirect::to('admin/nexa_locations');
     }
+
     public function edit_nexa_location($id)
     {
         $arr_data = [];
@@ -3951,9 +4002,10 @@ public function commercial_feedback()
         $data['title']     = 'Location';
         return view($this->folder_path.'edit_nexa_location',$data);
     }
+
     public function update_nexa_location(Request $request,$id)
-   {
-        $validator = Validator::make($request->all(), [
+    {
+         $validator = Validator::make($request->all(), [
                 'city'     => 'required',
                 'area'     => 'required',
             ]);
@@ -3991,6 +4043,7 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+
     public function view_nexa_location($id)
     {
         $arr_data = [];
@@ -4004,12 +4057,14 @@ public function commercial_feedback()
         $data['title']     = 'Location';
         return view($this->folder_path.'view_nexa_location',$data);
     }
+
     public function delete_nexa_location($id)
     {
         \DB::table('nexa_locations')->where(['id'=>$id])->delete();
         Session::flash('success', 'Success! Record deleted successfully.');
         return \Redirect::back();
     }
+
     public function commercial_locations(Request $request)
     {
         $arr_data = [];
@@ -4022,6 +4077,7 @@ public function commercial_feedback()
         $data['title']     = $this->title;
         return view($this->folder_path.'commercial_locations',$data);
     }
+
     public function add_commercial_location(Request $request)
     {
         $data['page_name'] = "Add";
@@ -4029,6 +4085,7 @@ public function commercial_feedback()
         $data['title']     = 'Location';
         return view($this->folder_path.'add_commercial_location',$data);
     }
+
     public function store_commercial_location(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -4057,6 +4114,7 @@ public function commercial_feedback()
         $arr_data['area']     = $request->input('area');
         $arr_data['is_active']= '1';
         $location             = \DB::table('commercial_locations')->insert($arr_data);
+        $location             = \DB::table('locations')->insert($arr_data);
         if (!empty($location))
         {
             Session::flash('success', 'Success! Record added successfully.');
@@ -4068,6 +4126,7 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+
     public function change_commercial_location_status($id)
     {
         $data =  \DB::table('commercial_locations')->where(['id'=>base64_decode($id)])->first();
@@ -4086,6 +4145,7 @@ public function commercial_feedback()
         }
         return \Redirect::to('admin/commercial_locations');
     }
+
     public function edit_commercial_location($id)
     {
         $arr_data = [];
@@ -4096,8 +4156,9 @@ public function commercial_feedback()
         $data['title']     = 'Location';
         return view($this->folder_path.'edit_commercial_location',$data);
     }
+
     public function update_commercial_location(Request $request,$id)
-   {
+    {
         $validator = Validator::make($request->all(), [
                 'city'     => 'required',
                 'area'     => 'required',
@@ -4136,6 +4197,7 @@ public function commercial_feedback()
             return \Redirect::back();
         }
     }
+
     public function view_commercial_location($id)
     {
         $arr_data = [];
@@ -4149,6 +4211,7 @@ public function commercial_feedback()
         $data['title']     = 'Location';
         return view($this->folder_path.'view_commercial_location',$data);
     }
+
     public function delete_commercial_location($id)
     {
         \DB::table('commercial_locations')->where(['id'=>$id])->delete();
@@ -4156,7 +4219,32 @@ public function commercial_feedback()
         return \Redirect::back();
     }
     
-    
+    public  function get_list($table_name,$area=Null)
+    {
+        $session_user = Session::get('user');
+        if($session_user->role!='admin' && $area!=NULL){ 
+            $city = $session_user->city;
+            $area1 = $session_user->area;
+            $data = \DB::table($table_name)
+                 ->where(['city'=>$city,'area'=>$area1])
+                 ->orderBy('id','DESC')
+                 ->get();
+        }
+        elseif($session_user->role!='admin' && $area==NULL)
+        {
+            $city = $session_user->city;
+            $data = \DB::table($table_name)
+                 ->where(['city'=>$city])
+                 ->orderBy('id','DESC')
+                 ->get();
+        }
+        elseif($session_user->role=='admin')
+        {
+            $data = \DB::table($table_name)->orderBy('id','DESC')->get();
+        }
+
+        return $data;
+    }
     
     
     
